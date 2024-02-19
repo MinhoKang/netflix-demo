@@ -8,13 +8,13 @@ import './PopularMovieSlide.style.css';
 
 const PopularMovieSlide = () => {
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
-  console.log(data);
+  console.log(data?.results);
 
   if (isLoading) {
-    <h1>로딩중...</h1>;
+    return <h1>로딩중...</h1>;
   }
   if (isError) {
-    <Alert variant="danger">{error.message}</Alert>;
+    return <Alert variant="danger">{error.message}</Alert>;
   }
 
   const responsive = {
@@ -42,9 +42,6 @@ const PopularMovieSlide = () => {
         containerClass="carousel-container"
         responsive={responsive}
       >
-        {/* {data &&
-          data.results &&
-          data.results.map((movie, index) => <MovieCard key={index} movie={movie} />)} */}
         {data?.results?.map((movie, index) => (
           <MovieCard key={index} movie={movie} />
         ))}

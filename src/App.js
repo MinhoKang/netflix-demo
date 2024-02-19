@@ -30,6 +30,6 @@ export default App;
 
 const Container = styled.div`
   background-color: black;
-  height: 100vh;
+  /* height: 100vh; */
   color: white;
 `;
