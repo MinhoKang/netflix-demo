@@ -4,15 +4,29 @@ import './MovieCard.style.css';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
 
 const MovieCard = ({ movie }) => {
+  const { data: genreData } = useMovieGenreQuery();
+
+  const showGenre = (genreIdList) => {
+    if (!genreData) {
+      return [];
+    }
+    const genreNameList = genreIdList.map((id) => {
+      const genreObj = genreData.find((genre) => genre.id === id);
+      return genreObj.name;
+    });
+    return genreNameList;
+  };
+
   return (
     <MovieCardContainer imgurl={movie.poster_path} hoverimgurl={movie.backdrop_path}>
       <Overlay>
         <h1>{movie.title}</h1>
-        {movie.genre_ids.map((genre, index) => (
-          <Badge bg="success" key={index}>
-            장르{genre}
+        {showGenre(movie.genre_ids).map((genre, index) => (
+          <Badge bg="danger" key={index}>
+            {genre}
           </Badge>
         ))}
         <div>
@@ -26,11 +40,11 @@ const MovieCard = ({ movie }) => {
           {/* 인기도 */}
           <div>
             {movie.adult ? (
-              <IsAdult bgColor={'#AA2F3E'} width={'20px'}>
+              <IsAdult bgcolor={'#AA2F3E'} width={'20px'}>
                 18
               </IsAdult>
             ) : (
-              <IsAdult bgColor={'#EDBE49'} width={'25px'}>
+              <IsAdult bgcolor={'#EDBE49'} width={'25px'}>
                 All
               </IsAdult>
             )}
@@ -80,7 +94,7 @@ const Vote = styled.div`
 `;
 
 const IsAdult = styled.p`
-  background-color: ${(props) => props.bgColor};
+  background-color: ${(props) => props.bgcolor};
   width: ${(props) => props.width};
   text-align: center;
   border-radius: 5px;
