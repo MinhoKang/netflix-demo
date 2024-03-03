@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MovieCard = ({ movie }) => {
   const { data: genreData } = useMovieGenreQuery();
-
+  const navigate = useNavigate();
   const showGenre = (genreIdList) => {
     if (!genreData) {
       return [];
@@ -21,11 +22,15 @@ const MovieCard = ({ movie }) => {
   };
 
   return (
-    <MovieCardContainer imgurl={movie.poster_path} hoverimgurl={movie.backdrop_path}>
+    <MovieCardContainer
+      imgurl={movie.poster_path}
+      hoverimgurl={movie.backdrop_path}
+      onClick={() => navigate(`/movies/${movie.id}`)}
+    >
       <Overlay>
         <h1>{movie.title}</h1>
         {showGenre(movie.genre_ids).map((genre, index) => (
-          <Badge bg="danger" key={index}>
+          <Badge bg="danger" key={index} style={{ marginRight: '8px' }}>
             {genre}
           </Badge>
         ))}
@@ -82,7 +87,7 @@ const Overlay = styled.section`
   color: white;
   font-weight: bold;
   overflow-wrap: break-word;
-  padding: 15px;
+  padding: 25px 15px;
   &:hover {
     opacity: 1;
   }

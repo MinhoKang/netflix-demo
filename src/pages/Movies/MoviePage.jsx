@@ -64,7 +64,7 @@ const MoviePage = () => {
               <Dropdown.Item onClick={handleFilter1}>인기 적은 순</Dropdown.Item>
             </DropdownButton>
             <DropdownButton variant="danger" id="dropdown-basic-button" title={filter2}>
-              {genreList.map((genre, index) => (
+              {genreList?.map((genre, index) => (
                 <Dropdown.Item key={index} onClick={handleFilter2}>
                   {genre.name}
                 </Dropdown.Item>
