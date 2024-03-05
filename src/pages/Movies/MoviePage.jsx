@@ -24,6 +24,7 @@ const MoviePage = () => {
     keyword,
     page,
   });
+
   console.log("쿼리", keyword);
   const { data: genreData } = useMovieGenreListQuery();
   const genreList = genreData?.data.genres;
@@ -34,10 +35,12 @@ const MoviePage = () => {
   // console.log("로우", rawData);
   // console.log("datadada", data);
   const [popularity, setPopularity] = useState("");
+  const [genre, setGenre] = useState("");
 
   const { data: pop } = useFilterPopularityMovieQuery({
     popularity,
     page,
+    // keyword,
   });
   console.log("팝", pop);
 
@@ -57,6 +60,7 @@ const MoviePage = () => {
   };
   const handleFilter2 = (event) => {
     setFilter2(event.target.innerText);
+    setGenre(event.target.innerText);
   };
 
   const handlePageClick = ({ selected }) => {
