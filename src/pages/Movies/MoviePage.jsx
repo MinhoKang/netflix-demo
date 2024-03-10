@@ -34,15 +34,15 @@ const MoviePage = () => {
   // const { data: rawData } = useSearchMovieRawQuery({ keyword });
   // console.log("로우", rawData);
   // console.log("datadada", data);
-  const [popularity, setPopularity] = useState("");
+  // const [popularity, setPopularity] = useState("");
   const [genre, setGenre] = useState("");
 
-  const { data: pop } = useFilterPopularityMovieQuery({
-    popularity,
-    page,
-    // keyword,
-  });
-  console.log("팝", pop);
+  // const { data: pop } = useFilterPopularityMovieQuery({
+  //   popularity,
+  //   page,
+  //   // keyword,
+  // });
+  // console.log("팝", pop);
 
   const handleMovieDetailPage = (movie) => {
     // navigate();
@@ -52,11 +52,11 @@ const MoviePage = () => {
 
   const handleFilter1 = (event) => {
     setFilter1(event.target.innerText);
-    setPopularity(
-      event.target.innerText === "인기 많은 순"
-        ? "popularity.desc"
-        : "popularity.asc"
-    );
+    // setPopularity(
+    //   event.target.innerText === "인기 많은 순"
+    //     ? "popularity.desc"
+    //     : "popularity.asc"
+    // );
   };
   const handleFilter2 = (event) => {
     setFilter2(event.target.innerText);
@@ -113,7 +113,7 @@ const MoviePage = () => {
           </Col>
           <Col lg={8} xs={12}>
             <Row>
-              {!popularity
+              {/* {!popularity
                 ? data?.results?.map((movie, index) => (
                     <Col key={index} lg={4} xs={12}>
                       <div onClick={() => handleMovieDetailPage(movie)}>
@@ -127,7 +127,41 @@ const MoviePage = () => {
                         <MovieCard movie={movie} />
                       </div>
                     </Col>
-                  ))}
+                  ))} */}
+              {/* {data?.results?.map((movie, index) => (
+                <Col key={index} lg={4} xs={12}>
+                  <div onClick={() => handleMovieDetailPage(movie)}>
+                    <MovieCard movie={movie} />
+                  </div>
+                </Col>
+              ))} */}
+              {filter1 === "정렬 기준"
+                ? data?.results?.map((movie, index) => (
+                    <Col key={index} lg={4} xs={12}>
+                      <div onClick={() => handleMovieDetailPage(movie)}>
+                        <MovieCard movie={movie} />
+                      </div>
+                    </Col>
+                  ))
+                : filter1 === "인기 많은 순"
+                ? data?.results
+                    ?.sort((a, b) => b.popularity - a.popularity)
+                    .map((movie, index) => (
+                      <Col key={index} lg={4} xs={12}>
+                        <div onClick={() => handleMovieDetailPage(movie)}>
+                          <MovieCard movie={movie} />
+                        </div>
+                      </Col>
+                    ))
+                : data?.results
+                    ?.sort((a, b) => a.popularity - b.popularity)
+                    .map((movie, index) => (
+                      <Col key={index} lg={4} xs={12}>
+                        <div onClick={() => handleMovieDetailPage(movie)}>
+                          <MovieCard movie={movie} />
+                        </div>
+                      </Col>
+                    ))}
             </Row>
             <ReactPaginate
               nextLabel="next >"
