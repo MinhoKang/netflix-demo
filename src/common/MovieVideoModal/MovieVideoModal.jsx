@@ -1,30 +1,29 @@
-import React from 'react';
-import { useMovieVideoIdQuery } from '../../../hooks/useMovieVideoId';
-import YouTube from 'react-youtube';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { useMovieVideoIdQuery } from "../../hooks/useMovieVideoId";
+import YouTube from "react-youtube";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const MovieVideoModal = ({ id, setShowTrailer }) => {
   const { data } = useMovieVideoIdQuery({ id });
   //   const trailer = data?.find((video) => video.type === 'Trailer');
   console.log(data);
-  const trailer = data?.results[0]?.key;
   const filterTrailer = data?.results?.filter(
-    (video) => video?.type === 'Trailer' && video?.official === true
+    (video) => video?.type === "Trailer" && video?.official === true
   );
   console.log(filterTrailer);
 
   const opts = {
-    height: '600',
-    width: '1000',
+    height: "600",
+    width: "1000",
     // playerVars: {
     //   // https://developers.google.com/youtube/player_parameters
-    //   autoplay: 1,
+    // autoplay: 1,
     // },
   };
   return (
-    <TrailerContainer>
+    <TrailerContainer onClick={() => setShowTrailer(false)}>
       <CloseBtn onClick={() => setShowTrailer(false)}>
         <FontAwesomeIcon icon={faTimes} />
       </CloseBtn>

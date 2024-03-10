@@ -1,11 +1,12 @@
-import React from 'react';
-import Badge from 'react-bootstrap/Badge';
-import './MovieCard.style.css';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from "react";
+import Badge from "react-bootstrap/Badge";
+import "./MovieCard.style.css";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { useMovieGenreQuery } from "../../hooks/useMovieGenre";
+import { useNavigate } from "react-router-dom";
+import noImage from "../../assets/image/no-image.png";
 
 const MovieCard = ({ movie }) => {
   const { data: genreData } = useMovieGenreQuery();
@@ -28,9 +29,9 @@ const MovieCard = ({ movie }) => {
       onClick={() => navigate(`/movies/${movie.id}`)}
     >
       <Overlay>
-        <h1>{movie.title}</h1>
+        <h3>{movie.title}</h3>
         {showGenre(movie.genre_ids).map((genre, index) => (
-          <Badge bg="danger" key={index} style={{ marginRight: '8px' }}>
+          <Badge bg="danger" key={index} style={{ marginRight: "8px" }}>
             {genre}
           </Badge>
         ))}
@@ -45,11 +46,11 @@ const MovieCard = ({ movie }) => {
           {/* 인기도 */}
           <div>
             {movie.adult ? (
-              <IsAdult bgcolor={'#AA2F3E'} width={'20px'}>
+              <IsAdult bgcolor={"#AA2F3E"} width={"20px"}>
                 18
               </IsAdult>
             ) : (
-              <IsAdult bgcolor={'#EDBE49'} width={'25px'}>
+              <IsAdult bgcolor={"#EDBE49"} width={"25px"}>
                 All
               </IsAdult>
             )}
@@ -73,8 +74,13 @@ const MovieCardContainer = styled.div`
   &:hover {
     transform: scale(1.2) translateZ(20px);
     z-index: 2;
-    background-image: ${({ hoverimgurl }) =>
-      `url(https://www.themoviedb.org/t/p/w600_and_h900_bestv2${hoverimgurl})`};
+    background-image: ${({ hoverimgurl, imgurl }) =>
+      hoverimgurl
+        ? `url(https://www.themoviedb.org/t/p/w600_and_h900_bestv2${hoverimgurl})`
+        : imgurl
+        ? `url(https://www.themoviedb.org/t/p/w600_and_h900_bestv2${imgurl})`
+        : `url(${noImage})`};
+    background-size: cover;
   }
 `;
 
