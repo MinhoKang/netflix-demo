@@ -13,6 +13,7 @@ const Banner = () => {
   const { data: movieVideo } = useMovieVideoIdQuery({
     id: data?.results[0]?.id,
   });
+  console.log('데이ㅏ',data)
   console.log("asdsad", movieVideo);
   if (isLoading) {
     <h1>로딩중...</h1>;

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  useSearchMovieQuery,
-  useSearchMovieRawQuery,
-} from "../../hooks/useSearchMovie";
+import { useSearchMovieQuery } from "../../hooks/useSearchMovie";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Col, Container, Row } from "react-bootstrap";
 import MovieCard from "../../common/MovieCard/MovieCard";
@@ -12,7 +9,6 @@ import ReactPaginate from "react-paginate";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useMovieGenreListQuery } from "../../hooks/useMovieGenreList";
-import { useFilterPopularityMovieQuery } from "../../hooks/useFilterMovie";
 
 const MoviePage = () => {
   const navigate = useNavigate();
@@ -25,6 +21,8 @@ const MoviePage = () => {
     page,
   });
 
+  console.log("qqqq", data);
+
   console.log("쿼리", keyword);
   const { data: genreData } = useMovieGenreListQuery();
   const genreList = genreData?.data.genres;
@@ -36,7 +34,7 @@ const MoviePage = () => {
   // console.log("datadada", data);
   // const [popularity, setPopularity] = useState("");
   const [genre, setGenre] = useState("");
-
+  console.log(genre);
   // const { data: pop } = useFilterPopularityMovieQuery({
   //   popularity,
   //   page,
@@ -81,6 +79,12 @@ const MoviePage = () => {
   if (isError) {
     return <Alert variant="danger">{error.message}</Alert>;
   }
+
+  // const genreMovie = data?.results?.filter((movie) =>
+  //   movie?.genre_ids?
+  // );
+
+  // console.log("qwdsa", genreMovie);
 
   return (
     <div>
