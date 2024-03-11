@@ -29,9 +29,8 @@ const MoviePage = () => {
   console.log("장르 데이터", genreList);
 
   const [popularity, setPopularity] = useState("");
+  console.log(popularity);
   const [genre, setGenre] = useState("");
-
-
 
   const handleMovieDetailPage = (movie) => {
     // navigate();
@@ -41,11 +40,11 @@ const MoviePage = () => {
 
   const handleFilter1 = (event) => {
     setFilter1(event.target.innerText);
-    // setPopularity(
-    //   event.target.innerText === "인기 많은 순"
-    //     ? "popularity.desc"
-    //     : "popularity.asc"
-    // );
+    setPopularity(
+      event.target.innerText === "인기 많은 순"
+        ? "popularity.desc"
+        : "popularity.asc"
+    );
   };
   const handleFilter2 = (event) => {
     setFilter2(event.target.innerText);
@@ -75,6 +74,15 @@ const MoviePage = () => {
         movie.genre_ids.includes(genreList.find((g) => g.name === genre)?.id)
       )
     : data.results;
+  const sortedMovies = filteredMovies.slice().sort((a, b) => {
+    if (popularity === "popularity.desc") {
+      return b.popularity - a.popularity; // 내림차순 정렬
+    } else if (popularity === "popularity.asc") {
+      return a.popularity - b.popularity; // 오름차순 정렬
+    } else {
+      return 0; // 정렬 기준이 없는 경우 그대로 유지
+    }
+  });
   return (
     <div>
       <Container>
@@ -128,7 +136,7 @@ const MoviePage = () => {
                   </div>
                 </Col>
               ))} */}
-              {filteredMovies.map((movie, index) => (
+              {sortedMovies.map((movie, index) => (
                 <Col key={index} lg={4} xs={12}>
                   <div onClick={() => handleMovieDetailPage(movie)}>
                     <MovieCard movie={movie} />
