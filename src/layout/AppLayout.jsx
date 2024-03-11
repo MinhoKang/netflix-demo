@@ -26,12 +26,15 @@ const AppLayout = () => {
         variant="dark"
       >
         <Container fluid>
-          <Navbar.Brand href="#" style={{ width: "100px" }}>
+          <Navbar.Brand
+            href="#"
+            style={{ width: "100px" }}
+            onClick={() => navigate("/")}
+          >
             <img
               src={netflixLogo}
               alt="netflix-logo"
               style={{ width: "100%" }}
-              onClick={() => navigate("/")}
             />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />

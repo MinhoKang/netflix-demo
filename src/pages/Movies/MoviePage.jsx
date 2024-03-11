@@ -9,7 +9,6 @@ import ReactPaginate from "react-paginate";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useMovieGenreListQuery } from "../../hooks/useMovieGenreList";
-import { useFilterPopularityMovieQuery } from "../../hooks/useFilterMovie";
 
 const MoviePage = () => {
   const navigate = useNavigate();
@@ -32,12 +31,7 @@ const MoviePage = () => {
   const [popularity, setPopularity] = useState("");
   const [genre, setGenre] = useState("");
 
-  const { data: pop } = useFilterPopularityMovieQuery({
-    popularity,
-    page,
-    keyword,
-  });
-  console.log("팝", pop);
+
 
   const handleMovieDetailPage = (movie) => {
     // navigate();
@@ -47,11 +41,11 @@ const MoviePage = () => {
 
   const handleFilter1 = (event) => {
     setFilter1(event.target.innerText);
-    setPopularity(
-      event.target.innerText === "인기 많은 순"
-        ? "popularity.desc"
-        : "popularity.asc"
-    );
+    // setPopularity(
+    //   event.target.innerText === "인기 많은 순"
+    //     ? "popularity.desc"
+    //     : "popularity.asc"
+    // );
   };
   const handleFilter2 = (event) => {
     setFilter2(event.target.innerText);

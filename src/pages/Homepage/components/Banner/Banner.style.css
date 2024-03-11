@@ -1,16 +1,16 @@
 .banner {
-  height: 56vh;
+  height: 65vh;
   background-position: left center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .banner::before {
-  content: '';
+  content: "";
   background: linear-gradient(to top, black, transparent);
   position: absolute;
   left: 0;
-  height: 56vh;
+  height: 65vh;
   width: 100%;
 }
 

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useMovieIdQuery } from '../../hooks/useMovieId';
-import styled from 'styled-components';
-import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
-import Badge from 'react-bootstrap/Badge';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import { useMovieReviewQuery } from '../../hooks/useMovieReview';
-import MovieReview from './MoiveReview/MovieReview';
-import RelatedMovies from './RelatedMovies/RelatedMovies';
-import MovieVideoModal from './MovieVideoModal/MovieVideoModal';
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useMovieIdQuery } from "../../hooks/useMovieId";
+import styled from "styled-components";
+import { useMovieGenreQuery } from "../../hooks/useMovieGenre";
+import Badge from "react-bootstrap/Badge";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { useMovieReviewQuery } from "../../hooks/useMovieReview";
+import MovieReview from "./MoiveReview/MovieReview";
+import RelatedMovies from "./RelatedMovies/RelatedMovies";
+import MovieVideoModal from "../../common/MovieVideoModal/MovieVideoModal";
 
 const MovieDetail = () => {
   let { id } = useParams();
@@ -22,7 +22,7 @@ const MovieDetail = () => {
   const { data: movieReview } = useMovieReviewQuery({ id });
   const movieReviewData = movieReview?.data.results;
 
-  const [selected, setSelected] = useState('Review');
+  const [selected, setSelected] = useState("Review");
   const selectBtn = (event) => {
     const select = event.target.innerText;
     setSelected(select);
@@ -38,7 +38,7 @@ const MovieDetail = () => {
           <div>
             <div>
               {thisMovieGenre?.map((genre, index) => (
-                <Badge bg="danger" key={index} style={{ marginRight: '10px' }}>
+                <Badge bg="danger" key={index} style={{ marginRight: "10px" }}>
                   {genre}
                 </Badge>
               ))}
@@ -56,11 +56,11 @@ const MovieDetail = () => {
               </div>
               <div>
                 {movieData?.adult ? (
-                  <IsAdult bgcolor={'#AA2F3E'} width={'20px'}>
+                  <IsAdult bgcolor={"#AA2F3E"} width={"20px"}>
                     18
                   </IsAdult>
                 ) : (
-                  <IsAdult bgcolor={'#EDBE49'} width={'25px'}>
+                  <IsAdult bgcolor={"#EDBE49"} width={"25px"}>
                     All
                   </IsAdult>
                 )}
@@ -69,50 +69,62 @@ const MovieDetail = () => {
             <Overview>{movieData?.overview}</Overview>
             <AdditionalDetailContainer>
               <div>
-                <Badge bg="danger" style={{ marginRight: '10px' }}>
+                <Badge bg="danger" style={{ marginRight: "10px" }}>
                   Budget
                 </Badge>
-                ${movieData?.budget.toLocaleString('ko-KR')}
+                ${movieData?.budget.toLocaleString("ko-KR")}
               </div>
               <div>
-                <Badge bg="danger" style={{ marginRight: '10px' }}>
+                <Badge bg="danger" style={{ marginRight: "10px" }}>
                   Revenue
                 </Badge>
-                ${movieData?.revenue.toLocaleString('ko-KR')}
+                ${movieData?.revenue.toLocaleString("ko-KR")}
               </div>
               <div>
-                <Badge bg="danger" style={{ marginRight: '10px' }}>
+                <Badge bg="danger" style={{ marginRight: "10px" }}>
                   Release Date
                 </Badge>
                 {movieData?.release_date}
               </div>
               <div>
-                <Badge bg="danger" style={{ marginRight: '10px' }}>
+                <Badge bg="danger" style={{ marginRight: "10px" }}>
                   Run Time
                 </Badge>
                 {movieData?.runtime}M
               </div>
             </AdditionalDetailContainer>
-            <WatchTrailer onClick={() => setShowTrailer(true)}>Watch Trailer</WatchTrailer>
+            <WatchTrailer onClick={() => setShowTrailer(true)}>
+              Watch Trailer
+            </WatchTrailer>
           </div>
         </InnerContainer>
         <ReviewAndRelated>
           <ul>
-            <li onClick={(event) => selectBtn(event)} selected={selected} thisText="Review">
+            <li
+              onClick={(event) => selectBtn(event)}
+              selected={selected}
+              thisText="Review"
+            >
               Review
             </li>
-            <li onClick={(event) => selectBtn(event)} selected={selected} thisText="Related Movies">
+            <li
+              onClick={(event) => selectBtn(event)}
+              selected={selected}
+              thisText="Related Movies"
+            >
               Related Movies
             </li>
           </ul>
         </ReviewAndRelated>
-        {selected === 'Review' ? (
+        {selected === "Review" ? (
           <MovieReview movieReviewData={movieReviewData} />
         ) : (
           <RelatedMovies id={id} />
         )}
       </Container>
-      {showTrailer && <MovieVideoModal id={id} setShowTrailer={setShowTrailer} />}
+      {showTrailer && (
+        <MovieVideoModal id={id} setShowTrailer={setShowTrailer} />
+      )}
     </div>
   );
 };
@@ -133,7 +145,8 @@ const InnerContainer = styled.div`
 `;
 
 const ImgContainer = styled.section`
-  /* src: ${({ imgurl }) => `url(https://image.tmdb.org/t/p/w300_and_h450_bestv2${imgurl})`};
+  /* src: ${({ imgurl }) =>
+    `url(https://image.tmdb.org/t/p/w300_and_h450_bestv2${imgurl})`};
   width: 100%;
   height: 100%; */
   background-image: ${({ imgurl }) =>
@@ -195,9 +208,9 @@ const ReviewAndRelated = styled.div`
       /* background-color: #aa2f3e; */
 
       /* background-color: ${(props) =>
-        props.selected === props.thisText ? '#aa2f3e' : '#0000ff'}; */
+        props.selected === props.thisText ? "#aa2f3e" : "#0000ff"}; */
       background-color: ${({ selected, thisText }) =>
-        selected === thisText ? '#aa2f3e' : '#0000ff'};
+        selected === thisText ? "#aa2f3e" : "#0000ff"};
       padding: 10px;
       border-radius: 15px;
       cursor: pointer;
