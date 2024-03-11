@@ -1,31 +1,46 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Outlet, useNavigate } from 'react-router-dom';
-import netflixLogo from '../image/netflix-logo.png';
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import { Outlet, useNavigate } from "react-router-dom";
+import netflixLogo from "../image/netflix-logo.png";
 
 const AppLayout = () => {
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
   const searchByKeyword = (event) => {
     event.preventDefault();
     navigate(`/movies?q=${keyword}`);
-    setKeyword('');
+    setKeyword("");
   };
   return (
     <div>
-      <Navbar expand="lg" data-bs-theme="dark" bg="dark" className="bg-body-dark" variant="dark">
+      <Navbar
+        expand="lg"
+        data-bs-theme="dark"
+        bg="dark"
+        className="bg-body-dark"
+        variant="dark"
+      >
         <Container fluid>
-          <Navbar.Brand href="#" style={{ width: '100px' }}>
-            <img src={netflixLogo} alt="netflix-logo" style={{ width: '100%' }} />
+          <Navbar.Brand href="#" style={{ width: "100px" }}>
+            <img
+              src={netflixLogo}
+              alt="netflix-logo"
+              style={{ width: "100%" }}
+              onClick={() => navigate("/")}
+            />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
-            <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
+            <Nav
+              className="me-auto my-2 my-lg-0"
+              style={{ maxHeight: "100px" }}
+              navbarScroll
+            >
               <Nav.Link variant="dark" href="/">
                 Home
               </Nav.Link>

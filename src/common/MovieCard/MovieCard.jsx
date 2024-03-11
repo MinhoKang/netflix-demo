@@ -1,11 +1,11 @@
-import React from 'react';
-import Badge from 'react-bootstrap/Badge';
-import './MovieCard.style.css';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import { useMovieGenreQuery } from '../../hooks/useMovieGenre';
-import { useNavigate, useParams } from 'react-router-dom';
+import React from "react";
+import Badge from "react-bootstrap/Badge";
+import "./MovieCard.style.css";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { useMovieGenreQuery } from "../../hooks/useMovieGenre";
+import { useNavigate, useParams } from "react-router-dom";
 
 const MovieCard = ({ movie }) => {
   const { data: genreData } = useMovieGenreQuery();
@@ -28,9 +28,9 @@ const MovieCard = ({ movie }) => {
       onClick={() => navigate(`/movies/${movie.id}`)}
     >
       <Overlay>
-        <h1>{movie.title}</h1>
+        <h2>{movie.title}</h2>
         {showGenre(movie.genre_ids).map((genre, index) => (
-          <Badge bg="danger" key={index} style={{ marginRight: '8px' }}>
+          <Badge bg="danger" key={index} style={{ marginRight: "8px" }}>
             {genre}
           </Badge>
         ))}
@@ -45,11 +45,11 @@ const MovieCard = ({ movie }) => {
           {/* 인기도 */}
           <div>
             {movie.adult ? (
-              <IsAdult bgcolor={'#AA2F3E'} width={'20px'}>
+              <IsAdult bgcolor={"#AA2F3E"} width={"20px"}>
                 18
               </IsAdult>
             ) : (
-              <IsAdult bgcolor={'#EDBE49'} width={'25px'}>
+              <IsAdult bgcolor={"#EDBE49"} width={"25px"}>
                 All
               </IsAdult>
             )}
@@ -80,7 +80,9 @@ const MovieCardContainer = styled.div`
 
 const Overlay = styled.section`
   width: 100%;
+  max-height: 900px;
   height: 100%;
+  max-width: 600px;
   background: rgba(42, 41, 41, 0.9);
   opacity: 0;
   transition: all 1s;

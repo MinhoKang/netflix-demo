@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  useSearchMovieQuery,
-  useSearchMovieRawQuery,
-} from "../../hooks/useSearchMovie";
+import { useSearchMovieQuery } from "../../hooks/useSearchMovie";
 import ClipLoader from "react-spinners/ClipLoader";
 import { Col, Container, Row } from "react-bootstrap";
 import MovieCard from "../../common/MovieCard/MovieCard";
@@ -25,22 +22,20 @@ const MoviePage = () => {
     page,
   });
 
-  console.log("쿼리", keyword);
   const { data: genreData } = useMovieGenreListQuery();
   const genreList = genreData?.data.genres;
   const [filter1, setFilter1] = useState("정렬 기준");
   const [filter2, setFilter2] = useState("장르별 검색");
   console.log("검색된 데이터", data);
-  // const { data: rawData } = useSearchMovieRawQuery({ keyword });
-  // console.log("로우", rawData);
-  // console.log("datadada", data);
+  console.log("장르 데이터", genreList);
+
   const [popularity, setPopularity] = useState("");
   const [genre, setGenre] = useState("");
 
   const { data: pop } = useFilterPopularityMovieQuery({
     popularity,
     page,
-    // keyword,
+    keyword,
   });
   console.log("팝", pop);
 
@@ -81,7 +76,11 @@ const MoviePage = () => {
   if (isError) {
     return <Alert variant="danger">{error.message}</Alert>;
   }
-
+  const filteredMovies = genre
+    ? data.results.filter((movie) =>
+        movie.genre_ids.includes(genreList.find((g) => g.name === genre)?.id)
+      )
+    : data.results;
   return (
     <div>
       <Container>
@@ -113,7 +112,7 @@ const MoviePage = () => {
           </Col>
           <Col lg={8} xs={12}>
             <Row>
-              {!popularity
+              {/* {!popularity
                 ? data?.results?.map((movie, index) => (
                     <Col key={index} lg={4} xs={12}>
                       <div onClick={() => handleMovieDetailPage(movie)}>
@@ -127,7 +126,21 @@ const MoviePage = () => {
                         <MovieCard movie={movie} />
                       </div>
                     </Col>
-                  ))}
+                  ))} */}
+              {/* {pop?.results?.map((movie, index) => (
+                <Col key={index} lg={4} xs={12}>
+                  <div onClick={() => handleMovieDetailPage(movie)}>
+                    <MovieCard movie={movie} />
+                  </div>
+                </Col>
+              ))} */}
+              {filteredMovies.map((movie, index) => (
+                <Col key={index} lg={4} xs={12}>
+                  <div onClick={() => handleMovieDetailPage(movie)}>
+                    <MovieCard movie={movie} />
+                  </div>
+                </Col>
+              ))}
             </Row>
             <ReactPaginate
               nextLabel="next >"
