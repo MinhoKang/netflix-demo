@@ -21,26 +21,16 @@ const MoviePage = () => {
     page,
   });
 
-  console.log("qqqq", data);
-
-  console.log("쿼리", keyword);
   const { data: genreData } = useMovieGenreListQuery();
   const genreList = genreData?.data.genres;
   const [filter1, setFilter1] = useState("정렬 기준");
   const [filter2, setFilter2] = useState("장르별 검색");
   console.log("검색된 데이터", data);
-  // const { data: rawData } = useSearchMovieRawQuery({ keyword });
-  // console.log("로우", rawData);
-  // console.log("datadada", data);
-  // const [popularity, setPopularity] = useState("");
+  console.log("장르 데이터", genreList);
+
+  const [popularity, setPopularity] = useState("");
+  console.log(popularity);
   const [genre, setGenre] = useState("");
-  console.log(genre);
-  // const { data: pop } = useFilterPopularityMovieQuery({
-  //   popularity,
-  //   page,
-  //   // keyword,
-  // });
-  // console.log("팝", pop);
 
   const handleMovieDetailPage = (movie) => {
     // navigate();
@@ -50,11 +40,11 @@ const MoviePage = () => {
 
   const handleFilter1 = (event) => {
     setFilter1(event.target.innerText);
-    // setPopularity(
-    //   event.target.innerText === "인기 많은 순"
-    //     ? "popularity.desc"
-    //     : "popularity.asc"
-    // );
+    setPopularity(
+      event.target.innerText === "인기 많은 순"
+        ? "popularity.desc"
+        : "popularity.asc"
+    );
   };
   const handleFilter2 = (event) => {
     setFilter2(event.target.innerText);
@@ -79,13 +69,20 @@ const MoviePage = () => {
   if (isError) {
     return <Alert variant="danger">{error.message}</Alert>;
   }
-
-  // const genreMovie = data?.results?.filter((movie) =>
-  //   movie?.genre_ids?
-  // );
-
-  // console.log("qwdsa", genreMovie);
-
+  const filteredMovies = genre
+    ? data.results.filter((movie) =>
+        movie.genre_ids.includes(genreList.find((g) => g.name === genre)?.id)
+      )
+    : data.results;
+  const sortedMovies = filteredMovies.slice().sort((a, b) => {
+    if (popularity === "popularity.desc") {
+      return b.popularity - a.popularity; // 내림차순 정렬
+    } else if (popularity === "popularity.asc") {
+      return a.popularity - b.popularity; // 오름차순 정렬
+    } else {
+      return 0; // 정렬 기준이 없는 경우 그대로 유지
+    }
+  });
   return (
     <div>
       <Container>
@@ -132,40 +129,20 @@ const MoviePage = () => {
                       </div>
                     </Col>
                   ))} */}
-              {/* {data?.results?.map((movie, index) => (
+              {/* {pop?.results?.map((movie, index) => (
                 <Col key={index} lg={4} xs={12}>
                   <div onClick={() => handleMovieDetailPage(movie)}>
                     <MovieCard movie={movie} />
                   </div>
                 </Col>
               ))} */}
-              {filter1 === "정렬 기준"
-                ? data?.results?.map((movie, index) => (
-                    <Col key={index} lg={4} xs={12}>
-                      <div onClick={() => handleMovieDetailPage(movie)}>
-                        <MovieCard movie={movie} />
-                      </div>
-                    </Col>
-                  ))
-                : filter1 === "인기 많은 순"
-                ? data?.results
-                    ?.sort((a, b) => b.popularity - a.popularity)
-                    .map((movie, index) => (
-                      <Col key={index} lg={4} xs={12}>
-                        <div onClick={() => handleMovieDetailPage(movie)}>
-                          <MovieCard movie={movie} />
-                        </div>
-                      </Col>
-                    ))
-                : data?.results
-                    ?.sort((a, b) => a.popularity - b.popularity)
-                    .map((movie, index) => (
-                      <Col key={index} lg={4} xs={12}>
-                        <div onClick={() => handleMovieDetailPage(movie)}>
-                          <MovieCard movie={movie} />
-                        </div>
-                      </Col>
-                    ))}
+              {sortedMovies.map((movie, index) => (
+                <Col key={index} lg={4} xs={12}>
+                  <div onClick={() => handleMovieDetailPage(movie)}>
+                    <MovieCard movie={movie} />
+                  </div>
+                </Col>
+              ))}
             </Row>
             <ReactPaginate
               nextLabel="next >"

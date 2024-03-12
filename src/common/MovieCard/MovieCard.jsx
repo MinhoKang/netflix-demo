@@ -86,7 +86,9 @@ const MovieCardContainer = styled.div`
 
 const Overlay = styled.section`
   width: 100%;
+  max-height: 900px;
   height: 100%;
+  max-width: 600px;
   background: rgba(42, 41, 41, 0.9);
   opacity: 0;
   transition: all 1s;
